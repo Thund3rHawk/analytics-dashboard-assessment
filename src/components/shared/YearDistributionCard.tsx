@@ -1,4 +1,3 @@
-import React from "react";
 import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const YearDistributionCard = ({yearDistribution}: any) => {
