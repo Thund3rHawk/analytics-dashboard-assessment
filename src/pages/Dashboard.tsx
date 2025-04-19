@@ -521,9 +521,9 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {paginatedData.map((vehicle) => (
+                  {paginatedData.map((vehicle, index) => (
                     <tr
-                      key={vehicle.id}
+                      key={index}
                       className={
                          // @ts-ignore
                         selectedVehicle && selectedVehicle.id === vehicle.id

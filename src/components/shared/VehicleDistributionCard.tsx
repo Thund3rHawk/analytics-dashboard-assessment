@@ -38,7 +38,7 @@ const VehicleDistributionCard = ({ modelDistribution }: any) => {
               >
                 {modelDistribution.map((entry: any, index: any) => (
                   <Cell
-                    key={`cell-${index}`}
+                    key={entry}
                     fill={COLORS[index % COLORS.length]}
                   />
                 ))}
