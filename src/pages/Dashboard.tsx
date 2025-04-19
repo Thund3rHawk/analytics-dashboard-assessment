@@ -162,13 +162,33 @@ export default function Dashboard() {
     });
 
     // For demo purposes: mocked growth rate
-    const growthRate = 27;
+    // const growthRate = 27;
+    // Count the most frequent year
+    const yearCounts = {};
+    filteredData.forEach((vehicle) => {
+        const year = vehicle["Model Year"];
+        //@ts-ignore
+        yearCounts[year] = (yearCounts[year] || 0) + 1;
+    });
+
+    let mostFrequentYear = "";
+    let maxYearCount = 0;
+    Object.entries(yearCounts).forEach(([year, count]) => {
+        //@ts-ignore
+        if (count > maxYearCount) {
+            //@ts-ignore
+            maxYearCount = count;
+            mostFrequentYear = year;
+        }
+    });
+
+    // Mocked growth rate based on most frequent year
 
     return {
       total: filteredData.length,
       avgRange,
       topPostalCode,
-      growthRate,
+      mostFrequentYear,
     };
   }, [filteredData]);
 
@@ -290,23 +310,23 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 md:p-6 shadow-lg">
+      <header className="bg-gradient-to-r from-[#102E50] to-blue-800 text-white p-4 md:p-6 shadow-lg">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-0">
-              Electric Vehicle Dashboard
+              Vehicle Dashboard
             </h1>
             <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 w-full md:w-auto">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center bg-blue-700 hover:bg-blue-600 rounded-full px-4 py-2 w-full md:w-auto justify-center"
+                className="flex items-center bg-[#F5C45E] text-black hover:bg-[#ebc77a] rounded-full px-4 py-2 w-full md:w-auto justify-center"
               >
                 <Filter className="mr-2 h-4 w-4" />
                 <span>{showFilters ? "Hide Filters" : "Show Filters"}</span>
               </button>
               <button
                 onClick={resetFilters}
-                className="flex items-center bg-blue-700 hover:bg-blue-600 rounded-full px-4 py-2 w-full md:w-auto justify-center"
+                className="flex items-center bg-[#F5C45E] text-black hover:bg-[#ebc77a] rounded-full px-4 py-2 w-full md:w-auto justify-center"
               >
                 <RefreshCw className="mr-2 h-4 w-4" />
                 <span>Reset</span>
@@ -316,7 +336,7 @@ export default function Dashboard() {
 
           {/* Filters Panel */}
           {showFilters && (
-            <div className="mt-4 bg-blue-700 rounded-lg p-4 grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="mt-4 bg-[#102E50] rounded-lg p-4 grid grid-cols-1 md:grid-cols-5 gap-4">
               <div>
                 <label className="block text-blue-200 text-sm mb-1">Make</label>
                 <select
@@ -423,7 +443,7 @@ export default function Dashboard() {
 
       {/* Main Dashboard */}
       <main className="container mx-auto p-4 md:p-6">
-        {/* KPI Cards */}
+        {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6">
           <DetailsCard
             icon={<Zap className="h-6 w-6 md:h-8 md:w-8 text-blue-600" />}
@@ -450,9 +470,9 @@ export default function Dashboard() {
             icon={
               <Activity className="h-6 w-6 md:h-8 md:w-8 text-yellow-600" />
             }
-            heading="Growth YoY"
+            heading="Most Frequent Year"
             color="bg-yellow-100"
-            about={`+${stats.growthRate}%`}
+            about={`${stats.mostFrequentYear}`}
           />
         </div>
 

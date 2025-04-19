@@ -5,7 +5,7 @@ const YearDistributionCard = ({yearDistribution}: any) => {
     <>
       <div className="bg-white rounded-xl shadow-md p-4 md:p-6">
         <h2 className="text-lg font-bold mb-4">Vehicles by Year</h2>
-        <div className="h-64">
+        <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={yearDistribution}
@@ -22,7 +22,7 @@ const YearDistributionCard = ({yearDistribution}: any) => {
                 name="Vehicles"
                 fill="#0088FE"
                 stroke="#0088FE"
-                fillOpacity={0.6}
+                fillOpacity={0.2}
               />
             </AreaChart>
           </ResponsiveContainer>

@@ -25,7 +25,7 @@ const ElectricDistributionCard = ({ rangeDistribution }: any) => {
               <YAxis />
               <Tooltip formatter={(value) => [value, "Vehicles"]} />
               <Legend />
-              <Bar dataKey="count" name="Vehicles" fill="#00C49F" />
+              <Bar dataKey="count" name="Vehicles" fill="#A0C878" />
             </BarChart>
           </ResponsiveContainer>
         </div>

@@ -14,7 +14,7 @@ const PostalCodeCard = ({ postalCodeDistribution }: any) => {
     <>
       <div className="bg-white rounded-xl shadow-md p-4 md:p-6">
         <h2 className="text-lg font-bold mb-4">Top Postal Codes</h2>
-        <div className="h-64">
+        <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               layout="vertical"
@@ -26,7 +26,7 @@ const PostalCodeCard = ({ postalCodeDistribution }: any) => {
               <YAxis dataKey="postalCode" type="category" />
               <Tooltip formatter={(value) => [value, "Vehicles"]} />
               <Legend />
-              <Bar dataKey="count" name="Vehicles" fill="#8884d8" />
+              <Bar dataKey="count" name="Vehicles" fill="#5F99AE" />
             </BarChart>
           </ResponsiveContainer>
         </div>
