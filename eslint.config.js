@@ -23,6 +23,8 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      '@typescript-eslint/recommended': 'warn',
+      '@typescript-eslint/recommended-requiring-type-checking': 'warn'
     },
   },
 )
