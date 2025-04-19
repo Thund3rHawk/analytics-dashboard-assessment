@@ -1,6 +1,15 @@
-import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
-const YearDistributionCard = ({yearDistribution}: any) => {
+const YearDistributionCard = ({ yearDistribution }: any) => {
   return (
     <>
       <div className="bg-white rounded-xl shadow-md p-4 md:p-6">

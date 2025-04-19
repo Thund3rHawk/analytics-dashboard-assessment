@@ -1,12 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import {
-  Zap,
-  Car,
-  MapPin,
-  Activity,
-  Filter,
-  RefreshCw,
-} from "lucide-react";
+import { Zap, Car, MapPin, Activity, Filter, RefreshCw } from "lucide-react";
 import Papa from "papaparse";
 import Footer from "@/components/shared/Footer";
 import VehicleDetailsCard from "@/components/shared/VehicleDetailsCard";
@@ -17,7 +10,7 @@ import VehicleDistributionCard from "@/components/shared/VehicleDistributionCard
 import DetailsCard from "@/components/shared/DetailsCard";
 import LoadingPage from "./LoadingPage";
 
-export default function Dashboard() {
+const Dashboard = () => {
   interface Vehicle {
     Make: string;
     Model: string;
@@ -43,26 +36,6 @@ export default function Dashboard() {
   const [showFilters, setShowFilters] = useState(false);
   const itemsPerPage = 20;
 
-  // This effect would be where you fetch your actual data
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       // In a real app, this would be an API call
-  //       // const response = await fetch('/api/vehicles');
-  //       // const data = await response.json();
-
-  //       // For demo, we'll generate mock data
-  //       const mockData = generateMockData(50000);
-  //       setData(mockData);
-  //       setFilteredData(mockData);
-  //       if (mockData.length > 0) {
-  //         setSelectedVehicle(mockData[0]);
-  //       }
-  //       setIsLoading(false);
-  //     };
-
-  //     fetchData();
-  //   }, []);
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -82,8 +55,7 @@ export default function Dashboard() {
         });
       } catch (error) {
         throw error;
-      }
-      finally {
+      } finally {
         setIsLoading(false);
       }
     }
@@ -135,7 +107,7 @@ export default function Dashboard() {
 
     // Calculate average range
     const totalRange = filteredData.reduce(
-        // @ts-ignore
+      // @ts-ignore
       (sum, vehicle) => sum + parseInt(vehicle["Electric Range"] || 0),
       0
     );
@@ -144,18 +116,17 @@ export default function Dashboard() {
     // Find top postal code
     const postalCodeCounts = {};
     filteredData.forEach((vehicle) => {
-        
       const postalCode = vehicle["Postal Code"];
-       // @ts-ignore
+      // @ts-ignore
       postalCodeCounts[postalCode] = (postalCodeCounts[postalCode] || 0) + 1;
     });
 
     let topPostalCode = "";
     let maxCount = 0;
     Object.entries(postalCodeCounts).forEach(([code, count]) => {
-         // @ts-ignore
+      // @ts-ignore
       if (count > maxCount) {
-         // @ts-ignore
+        // @ts-ignore
         maxCount = count;
         topPostalCode = code;
       }
@@ -166,20 +137,20 @@ export default function Dashboard() {
     // Count the most frequent year
     const yearCounts = {};
     filteredData.forEach((vehicle) => {
-        const year = vehicle["Model Year"];
-        //@ts-ignore
-        yearCounts[year] = (yearCounts[year] || 0) + 1;
+      const year = vehicle["Model Year"];
+      //@ts-ignore
+      yearCounts[year] = (yearCounts[year] || 0) + 1;
     });
 
     let mostFrequentYear = "";
     let maxYearCount = 0;
     Object.entries(yearCounts).forEach(([year, count]) => {
+      //@ts-ignore
+      if (count > maxYearCount) {
         //@ts-ignore
-        if (count > maxYearCount) {
-            //@ts-ignore
-            maxYearCount = count;
-            mostFrequentYear = year;
-        }
+        maxYearCount = count;
+        mostFrequentYear = year;
+      }
     });
 
     // Mocked growth rate based on most frequent year
@@ -196,17 +167,19 @@ export default function Dashboard() {
   const modelDistribution = useMemo(() => {
     if (filteredData.length === 0) return [];
 
-    const modelCounts:any = {};
+    const modelCounts: any = {};
     filteredData.forEach((vehicle) => {
       const model = `${vehicle.Make} ${vehicle.Model}`;
       modelCounts[model] = (modelCounts[model] || 0) + 1;
     });
-    
-    return Object.entries(modelCounts)
-      .map(([name, value]) => ({ name, value }))
-       // @ts-ignore
-      .sort((a, b) => b.value - a.value)
-      .slice(0, 10); // Top 10 models
+
+    return (
+      Object.entries(modelCounts)
+        .map(([name, value]) => ({ name, value }))
+        // @ts-ignore
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 10)
+    ); // Top 10 models
   }, [filteredData]);
 
   // Calculate range distribution
@@ -243,10 +216,12 @@ export default function Dashboard() {
       yearCounts[year] = (yearCounts[year] || 0) + 1;
     });
 
-    return Object.entries(yearCounts)
-      .map(([year, count]) => ({ year, count }))
-       // @ts-ignore
-      .sort((a, b) => a.year - b.year);
+    return (
+      Object.entries(yearCounts)
+        .map(([year, count]) => ({ year, count }))
+        // @ts-ignore
+        .sort((a, b) => a.year - b.year)
+    );
   }, [filteredData]);
 
   // Calculate postal code distribution
@@ -259,11 +234,13 @@ export default function Dashboard() {
       postalCodeCounts[postalCode] = (postalCodeCounts[postalCode] || 0) + 1;
     });
 
-    return Object.entries(postalCodeCounts)
-      .map(([postalCode, count]) => ({ postalCode, count }))
-       // @ts-ignore
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5); // Top 5 postal codes
+    return (
+      Object.entries(postalCodeCounts)
+        .map(([postalCode, count]) => ({ postalCode, count }))
+        // @ts-ignore
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 5)
+    ); // Top 5 postal codes
   }, [filteredData]);
 
   // Paginated data for data table
@@ -301,7 +278,6 @@ export default function Dashboard() {
     });
     setSearchQuery("");
   };
-
 
   if (isLoading) {
     <LoadingPage />;
@@ -341,7 +317,9 @@ export default function Dashboard() {
                 <label className="block text-blue-200 text-sm mb-1">Make</label>
                 <select
                   value={filters.make}
-                  onChange={(e:any) => handleFilterChange("make", e.target.value)}
+                  onChange={(e: any) =>
+                    handleFilterChange("make", e.target.value)
+                  }
                   className="bg-blue-800 text-white rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
                   <option value="">All Makes</option>
@@ -358,7 +336,9 @@ export default function Dashboard() {
                 </label>
                 <select
                   value={filters.model}
-                  onChange={(e: any) => handleFilterChange("model", e.target.value)}
+                  onChange={(e: any) =>
+                    handleFilterChange("model", e.target.value)
+                  }
                   className="bg-blue-800 text-white rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
                   <option value="">All Models</option>
@@ -373,7 +353,9 @@ export default function Dashboard() {
                 <label className="block text-blue-200 text-sm mb-1">Year</label>
                 <select
                   value={filters.year}
-                  onChange={(e: any) => handleFilterChange("year", e.target.value)}
+                  onChange={(e: any) =>
+                    handleFilterChange("year", e.target.value)
+                  }
                   className="bg-blue-800 text-white rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
                   <option value="">All Years</option>
@@ -390,7 +372,7 @@ export default function Dashboard() {
                 </label>
                 <select
                   value={filters.postalCode}
-                  onChange={(e:any) =>
+                  onChange={(e: any) =>
                     handleFilterChange("postalCode", e.target.value)
                   }
                   className="bg-blue-800 text-white rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-300"
@@ -545,7 +527,7 @@ export default function Dashboard() {
                     <tr
                       key={index}
                       className={
-                         // @ts-ignore
+                        // @ts-ignore
                         selectedVehicle && selectedVehicle.id === vehicle.id
                           ? "bg-blue-50"
                           : "hover:bg-gray-50"
@@ -713,4 +695,6 @@ export default function Dashboard() {
       <Footer />
     </div>
   );
-}
+};
+
+export default Dashboard;

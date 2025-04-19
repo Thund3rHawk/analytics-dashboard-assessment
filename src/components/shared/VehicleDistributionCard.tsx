@@ -37,10 +37,7 @@ const VehicleDistributionCard = ({ modelDistribution }: any) => {
                 }
               >
                 {modelDistribution.map((entry: any, index: any) => (
-                  <Cell
-                    key={entry}
-                    fill={COLORS[index % COLORS.length]}
-                  />
+                  <Cell key={entry} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip formatter={(value) => [value, "Vehicles"]} />
