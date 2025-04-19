@@ -6,7 +6,6 @@ import {
   Activity,
   Filter,
   RefreshCw,
-  Search,
 } from "lucide-react";
 import Papa from "papaparse";
 import Footer from "@/components/shared/Footer";
@@ -92,8 +91,6 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
-//   console.log(data);
-
   // Apply filters to data
   useEffect(() => {
     if (data.length > 0) {
@@ -126,15 +123,6 @@ export default function Dashboard() {
         });
       }
 
-    //   if (searchQuery) {
-    //     results = results.filter(
-    //       (vehicle) =>
-    //         vehicle.Make.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //         vehicle.Model.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //         vehicle["Postal Code"].includes(searchQuery)
-    //     );
-    //   }
-
       setFilteredData(results);
       setCurrentPage(1);
     }
@@ -147,6 +135,7 @@ export default function Dashboard() {
 
     // Calculate average range
     const totalRange = filteredData.reduce(
+        // @ts-ignore
       (sum, vehicle) => sum + parseInt(vehicle["Electric Range"] || 0),
       0
     );
@@ -155,14 +144,18 @@ export default function Dashboard() {
     // Find top postal code
     const postalCodeCounts = {};
     filteredData.forEach((vehicle) => {
+        
       const postalCode = vehicle["Postal Code"];
+       // @ts-ignore
       postalCodeCounts[postalCode] = (postalCodeCounts[postalCode] || 0) + 1;
     });
 
     let topPostalCode = "";
     let maxCount = 0;
     Object.entries(postalCodeCounts).forEach(([code, count]) => {
+         // @ts-ignore
       if (count > maxCount) {
+         // @ts-ignore
         maxCount = count;
         topPostalCode = code;
       }
@@ -188,9 +181,10 @@ export default function Dashboard() {
       const model = `${vehicle.Make} ${vehicle.Model}`;
       modelCounts[model] = (modelCounts[model] || 0) + 1;
     });
-
+    
     return Object.entries(modelCounts)
       .map(([name, value]) => ({ name, value }))
+       // @ts-ignore
       .sort((a, b) => b.value - a.value)
       .slice(0, 10); // Top 10 models
   }, [filteredData]);
@@ -231,6 +225,7 @@ export default function Dashboard() {
 
     return Object.entries(yearCounts)
       .map(([year, count]) => ({ year, count }))
+       // @ts-ignore
       .sort((a, b) => a.year - b.year);
   }, [filteredData]);
 
@@ -246,6 +241,7 @@ export default function Dashboard() {
 
     return Object.entries(postalCodeCounts)
       .map(([postalCode, count]) => ({ postalCode, count }))
+       // @ts-ignore
       .sort((a, b) => b.count - a.count)
       .slice(0, 5); // Top 5 postal codes
   }, [filteredData]);
@@ -529,6 +525,7 @@ export default function Dashboard() {
                     <tr
                       key={vehicle.id}
                       className={
+                         // @ts-ignore
                         selectedVehicle && selectedVehicle.id === vehicle.id
                           ? "bg-blue-50"
                           : "hover:bg-gray-50"
