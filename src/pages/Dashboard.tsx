@@ -40,7 +40,7 @@ const Dashboard = () => {
     async function fetchData() {
       try {
         const data = await fetch(
-          "../../data-to-visualize/Electric_Vehicle_Population_Data.csv"
+          "data-to-visualize/Electric_Vehicle_Population_Data.csv"
         );
         if (!data.ok) {
           throw new Error("failed to read file");
