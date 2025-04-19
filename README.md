@@ -10,6 +10,12 @@ The Electric Vehicle Population dataset is available in the [Electric Vehicle Po
 
 **Note:** We've reduced the dataset in the repository to keep the data size small in the frontend bundle.
 
+## Screenshots
+<img width="1692" alt="Screenshot 2025-04-20 at 1 29 23 AM" src="https://github.com/user-attachments/assets/650bf41e-7f9a-4161-8cd8-e503c8a54b00" />
+<img width="1687" alt="Screenshot 2025-04-20 at 1 29 32 AM" src="https://github.com/user-attachments/assets/b6c3a95b-15d2-4c60-b16b-02e0720d64f6" />
+<img width="1687" alt="Screenshot 2025-04-20 at 1 29 39 AM" src="https://github.com/user-attachments/assets/a1144e59-e4a8-4db4-9026-ef07ad032e30" />
+
+
 ## Tasks
 
 ### Dashboard Creation:
