@@ -9,7 +9,7 @@ import ElectricDistributionCard from "@/components/shared/ElectricDistributionCa
 import VehicleDistributionCard from "@/components/shared/VehicleDistributionCard";
 import DetailsCard from "@/components/shared/DetailsCard";
 import LoadingPage from "./LoadingPage";
-import { Vehicle } from "@/types";
+import { Vehicle } from "../types/index.ts";
 
 const Dashboard = () => {
   const [data, setData] = useState<Vehicle[]>([]);
