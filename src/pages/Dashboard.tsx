@@ -9,17 +9,9 @@ import ElectricDistributionCard from "@/components/shared/ElectricDistributionCa
 import VehicleDistributionCard from "@/components/shared/VehicleDistributionCard";
 import DetailsCard from "@/components/shared/DetailsCard";
 import LoadingPage from "./LoadingPage";
+import { Vehicle } from "@/types";
 
 const Dashboard = () => {
-  interface Vehicle {
-    Make: string;
-    Model: string;
-    "Model Year": string;
-    "Postal Code": string;
-    "Electric Range": string;
-    [key: string]: any;
-  }
-
   const [data, setData] = useState<Vehicle[]>([]);
   const [filteredData, setFilteredData] = useState<Vehicle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,9 +31,7 @@ const Dashboard = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await fetch(
-          "data/Electric_Vehicle_Population_Data.csv"
-        );
+        const data = await fetch("data/Electric_Vehicle_Population_Data.csv");
         if (!data.ok) {
           throw new Error("failed to read file");
         }
@@ -84,6 +74,7 @@ const Dashboard = () => {
 
       if (filters.postalCode) {
         results = results.filter(
+          //@ts-ignore
           (vehicle) => vehicle["Postal Code"] === filters.postalCode
         );
       }
@@ -103,7 +94,7 @@ const Dashboard = () => {
   // Calculate statistics and chart data based on filtered data
   const stats = useMemo(() => {
     if (filteredData.length === 0)
-      return { total: 0, avgRange: 0, topPostalCode: "", growthRate: 0 };
+      return { total: 0, avgRange: 0, topPostalCode: "", mostFrequentYear: null };
 
     // Calculate average range
     const totalRange = filteredData.reduce(
@@ -132,9 +123,6 @@ const Dashboard = () => {
       }
     });
 
-    // For demo purposes: mocked growth rate
-    // const growthRate = 27;
-    // Count the most frequent year
     const yearCounts = {};
     filteredData.forEach((vehicle) => {
       const year = vehicle["Model Year"];
@@ -152,8 +140,6 @@ const Dashboard = () => {
         mostFrequentYear = year;
       }
     });
-
-    // Mocked growth rate based on most frequent year
 
     return {
       total: filteredData.length,
@@ -692,6 +678,8 @@ const Dashboard = () => {
           <VehicleDetailsCard selectedVehicle={selectedVehicle} />
         </div>
       </main>
+
+      {/* Footer */}
       <Footer />
     </div>
   );
